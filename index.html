@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Info by QR Code</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Scan QR Code & Enter PIN to Get Product Info</h1>
+    
+    <!-- QR Code Scanner -->
+    <div id="qr-reader"></div>
+    
+    <!-- PIN Input Field -->
+    <div>
+        <label for="pin">Enter PIN:</label>
+        <input type="text" id="pin" maxlength="6" placeholder="Enter PIN" required>
+        <button onclick="fetchProductInfo()">Submit</button>
+    </div>
+    
+    <!-- Product Info Display -->
+    <div id="product-info" style="display: none;">
+        <h2>Product Information</h2>
+        <p id="product-details"></p>
+    </div>
+
+    <!-- Include QR Scanner JS Library -->
+    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
+
+    <script>
+        // QR Code Scanner initialization
+        function onScanSuccess(decodedText, decodedResult) {
+            document.getElementById('pin').value = decodedText;
+        }
+
+        var html5QrcodeScanner = new Html5QrcodeScanner(
+            "qr-reader", { fps: 10, qrbox: 250 });
+        html5QrcodeScanner.render(onScanSuccess);
+
+        // Function to fetch product info based on PIN
+        function fetchProductInfo() {
+            const pin = document.getElementById('pin').value;
+            if(pin === '123456') {
+                document.getElementById('product-info').style.display = 'block';
+                document.getElementById('product-details').innerText = 'Product Name: XYZ, Description: High-quality product, Price: $50';
+            } else {
+                alert('Invalid PIN');
+            }
+        }
+    </script>
+</body>
+</html>
