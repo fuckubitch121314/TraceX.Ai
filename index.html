@@ -3,51 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Info by QR Code</title>
+    <title>TraceX.Ai Product Info</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Basic Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #111;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        #pin-input {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 1.2rem;
+            width: 150px;
+            text-align: center;
+        }
+
+        #submit-btn {
+            padding: 10px 20px;
+            border: none;
+            background-color: #ff5722;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        #submit-btn:hover {
+            background-color: #e64a19;
+        }
+
+        #product-info {
+            margin-top: 30px;
+            display: none;
+            text-align: center;
+        }
+
+        #cube {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            transform-style: preserve-3d;
+            transform: rotateX(30deg) rotateY(30deg);
+            animation: spin 10s infinite linear;
+        }
+
+        .face {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background-color: rgba(255, 87, 34, 0.9);
+            border: 2px solid #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .front  { transform: translateZ(100px); }
+        .back   { transform: rotateY(180deg) translateZ(100px); }
+        .right  { transform: rotateY(90deg) translateZ(100px); }
+        .left   { transform: rotateY(-90deg) translateZ(100px); }
+        .top    { transform: rotateX(90deg) translateZ(100px); }
+        .bottom { transform: rotateX(-90deg) translateZ(100px); }
+
+        @keyframes spin {
+            from {
+                transform: rotateX(0deg) rotateY(0deg);
+            }
+            to {
+                transform: rotateX(360deg) rotateY(360deg);
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Scan QR Code & Enter PIN to Get Product Info</h1>
-    
-    <!-- QR Code Scanner -->
-    <div id="qr-reader"></div>
-    
-    <!-- PIN Input Field -->
-    <div>
-        <label for="pin">Enter PIN:</label>
-        <input type="text" id="pin" maxlength="6" placeholder="Enter PIN" required>
-        <button onclick="fetchProductInfo()">Submit</button>
+
+    <h1>TraceX.Ai Product Info</h1>
+
+    <!-- Cube Animation -->
+    <div id="cube">
+        <div class="face front">T</div>
+        <div class="face back">R</div>
+        <div class="face right">A</div>
+        <div class="face left">C</div>
+        <div class="face top">E</div>
+        <div class="face bottom">X</div>
     </div>
-    
-    <!-- Product Info Display -->
-    <div id="product-info" style="display: none;">
-        <h2>Product Information</h2>
+
+    <!-- PIN Input -->
+    <input type="text" id="pin-input" placeholder="Enter PIN">
+    <br>
+    <button id="submit-btn" onclick="checkPin()">Submit</button>
+
+    <!-- Product Info Section -->
+    <div id="product-info">
+        <h2>Product Details</h2>
         <p id="product-details"></p>
     </div>
 
-    <!-- Include QR Scanner JS Library -->
-    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
-
     <script>
-        // QR Code Scanner initialization
-        function onScanSuccess(decodedText, decodedResult) {
-            document.getElementById('pin').value = decodedText;
-        }
+        // Function to check PIN and display product info
+        function checkPin() {
+            const pin = document.getElementById('pin-input').value;
+            const productInfoDiv = document.getElementById('product-info');
+            const productDetails = document.getElementById('product-details');
 
-        var html5QrcodeScanner = new Html5QrcodeScanner(
-            "qr-reader", { fps: 10, qrbox: 250 });
-        html5QrcodeScanner.render(onScanSuccess);
-
-        // Function to fetch product info based on PIN
-        function fetchProductInfo() {
-            const pin = document.getElementById('pin').value;
-            if(pin === '123456') {
-                document.getElementById('product-info').style.display = 'block';
-                document.getElementById('product-details').innerText = 'Product Name: XYZ, Description: High-quality product, Price: $50';
+            if (pin === '123456') {
+                productInfoDiv.style.display = 'block';
+                productDetails.innerHTML = 'Product Name: TraceX.AI<br>Description: AI-powered automation tool.<br>Price: $499';
             } else {
-                alert('Invalid PIN');
+                alert('Invalid PIN. Please try again.');
             }
         }
     </script>
+
 </body>
 </html>
