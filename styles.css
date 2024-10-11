@@ -1,0 +1,21 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}
+
+#qr-reader {
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#product-info {
+    margin-top: 20px;
+}
+
+input, button {
+    padding: 10px;
+    margin-top: 10px;
+}
